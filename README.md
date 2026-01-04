@@ -1,6 +1,7 @@
 **St. Joseph Mission School Website**
 
 **Overview**
+
 A modern educational website for St. Joseph Mission School that serves as a digital hub for students, parents, staff, and the community. It provides official information about the school while enabling staff-controlled content management.
 
 **Key Features**
