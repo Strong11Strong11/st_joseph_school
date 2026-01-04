@@ -1,0 +1,166 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Admissions{% endblock %}
+
+{% block content %}
+<div class="page-header-wrapper">
+    <div class="page-header-bg">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-title text-center">Admissions</h1>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{% url 'home' %}" class="text-white">Home</a></li>
+                            <li class="breadcrumb-item"><a href="" class="text-white">Resources</a></li>
+                            <li class="breadcrumb-item active text-dark" aria-current="page">Admissions</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="section-padding mb-3 mt-3">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="section-header mb-5">
+                    <h4 class="section-title">Admission Information</h4>
+                    <p class="lead">{{ description }}</p>
+                </div>
+
+                {% for section in sections %}
+                <div class="admission-section mb-5">
+                    <h3 class="mb-3">{{ section.title }}</h3>
+                    <div class="admission-content">
+                        {{ section.content|safe }}
+                    </div>
+                </div>
+                {% endfor %}
+
+                <div class="downloads-section mt-5">
+                    <h4 class="mb-4">Admission Documents</h4>
+                    <div class="downloads-list">
+                        {% for document in documents %}
+                        <div class="download-card">
+                            <div class="download-icon">
+                                <i class="{{ document.get_icon_class }} fa-3x"></i>
+                            </div>
+                            <div class="download-info">
+                                <h4>{{ document.title }}</h4>
+                                {% if document.description %}
+                                <p class="text-muted mb-2">{{ document.description }}</p>
+                                {% endif %}
+                                <div class="file-meta">
+                                    <span class="badge bg-primary">{{ document.get_file_type_display }}</span>
+                                    <span class="file-size">{{ document.file_size }}</span>
+                                    <span class="downloads-count text-muted">
+                                        <i class="fas fa-download ms-3 me-1"></i>{{ document.download_count }}
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="download-action">
+                                <a href="{% url 'download_document' document.slug %}" class="btn btn-primary btn-download" download>
+                                    <i class="fas fa-download me-2"></i>Download
+                                </a>
+                            </div>
+                        </div>
+                        {% empty %}
+                        <div class="alert alert-info">
+                            <i class="fas fa-info-circle me-2"></i>
+                            No admission documents available yet.
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="sidebar-widget">
+                    <div class="widget-header">
+                        <h4 class="text-white"><i class="fas fa-graduation-cap me-2"></i>Admission Process</h4>
+                    </div>
+                    <div class="widget-content">
+                        <div class="process-steps">
+                            <div class="process-step">
+                                <div class="step-number">1</div>
+                                <div class="step-content">
+                                    <h6>Submit Application</h6>
+                                    <p>Complete and submit the application form with required documents</p>
+                                </div>
+                            </div>
+                            <div class="process-step">
+                                <div class="step-number">2</div>
+                                <div class="step-content">
+                                    <h6>Entrance Examination</h6>
+                                    <p>Sit for the entrance examination (if applicable)</p>
+                                </div>
+                            </div>
+                            <div class="process-step">
+                                <div class="step-number">3</div>
+                                <div class="step-content">
+                                    <h6>Interview</h6>
+                                    <p>Student and parent interview with the admissions panel</p>
+                                </div>
+                            </div>
+                            <div class="process-step">
+                                <div class="step-number">4</div>
+                                <div class="step-content">
+                                    <h6>Acceptance</h6>
+                                    <p>Receive admission letter and registration details</p>
+                                </div>
+                            </div>
+                            <div class="process-step">
+                                <div class="step-number">5</div>
+                                <div class="step-content">
+                                    <h6>Registration</h6>
+                                    <p>Complete registration and fee payment</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sidebar-widget mt-4">
+                    <div class="widget-header">
+                        <h4 class="text-white"><i class="fas fa-clock me-2"></i>Admission Office Hours</h4>
+                    </div>
+                    <div class="widget-content">
+                        <table class="table table-bordered">
+                            <tr>
+                                <td><strong>Monday - Friday</strong></td>
+                                <td>8:00 AM - 4:00 PM</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Saturday</strong></td>
+                                <td>9:00 AM - 1:00 PM</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Sunday</strong></td>
+                                <td>Closed</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="sidebar-widget mt-4">
+                    <div class="widget-header">
+                        <h4 class="text-white"><i class="fas fa-envelope me-2"></i>Contact Admissions</h4>
+                    </div>
+                    <div class="widget-content">
+                        <div class="contact-widget">
+                            <p><i class="fas fa-user me-2"></i> Admissions Office</p>
+                            <p><i class="fas fa-phone me-2"></i> +255 620 213 803</p>
+                            <p><i class="fas fa-envelope me-2"></i> admissions@stjosephmission.edu</p>
+                            <p><i class="fab fa-whatsapp me-2"></i> +255 623 113 346</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

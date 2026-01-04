@@ -1,0 +1,109 @@
+<!-- contact/templates/contact/contact.html -->
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %}Contact Us{% endblock %}
+
+{% block content %}
+<!-- Page Header with Background Image -->
+<div class="page-header-wrapper">
+    <div class="page-header-bg">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <h1 class="page-title">Contact us</h1>
+                    <div class="page-title-divider"></div>
+                    <p class="lead text-white mb-0">Discover our journey, values, and commitment to excellence</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container py-5 fadeIn">
+    <div class="row">
+        <!-- Contact Information -->
+        <div class="col-lg-5 mb-5">
+            <h1 class="display-5 mb-4">Get In Touch</h1>
+            
+            {% if contact_info %}
+            <div class="contact-info- mb-5">
+                <div class="d-flex mb-4">
+                    <div class="flex-shrink-0">
+                        <i class="fas fa-map-marker-alt fa-2x text-primary"></i>
+                    </div>
+                    <div class="flex-grow-1 ms-3">
+                        <h5>Address</h5>
+                        <p class="text-muted">{{ contact_info.address|linebreaks }}</p>
+                    </div>
+                </div>
+                
+                <div class="d-flex mb-4">
+                    <div class="flex-shrink-0">
+                        <i class="fas fa-phone fa-2x text-success"></i>
+                    </div>
+                    <div class="flex-grow-1 ms-3">
+                        <h5>Phone</h5>
+                        <p class="text-muted">{{ contact_info.phone }}</p>
+                        {% if contact_info.fax %}
+                        <p class="text-muted"><strong>Fax:</strong> {{ contact_info.fax }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <div class="d-flex mb-4">
+                    <div class="flex-shrink-0">
+                        <i class="fas fa-envelope fa-2x text-warning"></i>
+                    </div>
+                    <div class="flex-grow-1 ms-3">
+                        <h5>Email</h5>
+                        <p class="text-muted">{{ contact_info.email }}</p>
+                    </div>
+                </div>
+                
+                {% if contact_info.office_hours %}
+                <div class="d-flex mb-4">
+                    <div class="flex-shrink-0">
+                        <i class="fas fa-clock fa-2x text-info"></i>
+                    </div>
+                    <div class="flex-grow-1 ms-3">
+                        <h5>Office Hours</h5>
+                        <p class="text-muted">{{ contact_info.office_hours|linebreaks }}</p>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+            {% endif %}
+
+            <!-- Map -->
+            {% if contact_info.map_embed_code %}
+            <div class="map-container mb-4 mt-4">
+                <h5 class="mb-3">Our Location</h5>
+                <div class="ratio ratio-16x9">
+                    {{ contact_info.map_embed_code|safe }}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Contact Form -->
+        <div class="col-lg-7">
+            <div class="card shadow-lg border-0">
+                <div class="card-body p-5">
+                    <h4 class="section-title mb-4">Send us a Message</h4>
+                    
+                    <form method="post" novalidate>
+                        {% csrf_token %}
+                        {{ form|crispy }}
+                        
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-paper-plane me-2"></i>Send Message
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

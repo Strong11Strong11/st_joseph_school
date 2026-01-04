@@ -1,0 +1,292 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Our Services{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<div class="page-header-wrapper">
+    <div class="page-header-bg">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <h1 class="page-title">Our Academic Programs</h1>
+                    <div class="page-title-divider"></div>
+                    <p class="lead text-white mb-0">Comprehensive educational programs and support services for holistic development</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Main Services Section -->
+<section class="services-main py-5">
+    <div class="container">
+        <div class="row align-items-center mb-5">
+            <div class="col-lg-6">
+                <div class="section-intro">
+                    <h4 class="section-title">Quality Education Services</h4>
+                    <p class="lead">
+                        At St. Joseph Mission School, we provide a comprehensive range of educational services designed 
+                        to nurture every student's intellectual, emotional, and physical growth. Our holistic approach 
+                        ensures excellence in academics while fostering character development.
+                    </p>
+                    <div class="stats-highlight d-flex gap-4 mt-4">
+                        <div class="stat">
+                            <h3 class="stat-number">15+</h3>
+                            <p class="stat-label">Academic Programs</p>
+                        </div>
+                        <div class="stat">
+                            <h3 class="stat-number">100%</h3>
+                            <p class="stat-label">Student Support</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="services-hero-image">
+                    <div class="image-container">
+                        <img src="{% static 'images/staff.jpg' %}" alt="Students Learning" class="img-fluid rounded shadow" onerror="this.src='https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80'">
+                        <div class="image-overlay">
+                            <!-- <div class="overlay-content">
+                                <h4>Excellence in Education</h4>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Academic Programs -->
+        <div class="services-section mb-5" id="academic">
+            <div class="section-header text-center mb-5">
+                <h4 class="section-title">Academic Programs</h4>
+                <p class="section-subtitle">Comprehensive curriculum from early childhood to secondary education</p>
+                <div class="section-divider"></div>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-6">
+                    <div class="service-card academic">
+                        <div class="service-icon">
+                            <i class="fas fa-baby"></i>
+                        </div>
+                        <h4 class="service-title">Pre-School Program</h4>
+                        <p class="service-description">
+                            Early childhood education focusing on cognitive development, social skills, and creativity 
+                            through play-based learning.
+                        </p>
+                        <ul class="service-features">
+                            <li><i class="fas fa-check-circle"></i> Age 3-5 years</li>
+                            <li><i class="fas fa-check-circle"></i> Montessori methods</li>
+                            <li><i class="fas fa-check-circle"></i> Creative activities</li>
+                            <li><i class="fas fa-check-circle"></i> Basic literacy & numeracy</li>
+                        </ul>
+                        <div class="service-footer">
+                            <span class="service-age">Age: 3-5 years</span>
+                            <a href="" class="service-link">Learn More <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-6">
+                    <div class="service-card academic">
+                        <div class="service-icon">
+                            <i class="fas fa-child"></i>
+                        </div>
+                        <h4 class="service-title">Primary Education</h4>
+                        <p class="service-description">
+                            Comprehensive primary education building strong foundations in core subjects and 
+                            developing essential learning skills.
+                        </p>
+                        <ul class="service-features">
+                            <li><i class="fas fa-check-circle"></i> Grades 1-7</li>
+                            <li><i class="fas fa-check-circle"></i> National curriculum</li>
+                            <li><i class="fas fa-check-circle"></i> Core subjects focus</li>
+                            <li><i class="fas fa-check-circle"></i> Basic computer skills</li>
+                        </ul>
+                        <div class="service-footer">
+                            <span class="service-age">Grades: 1-7</span>
+                            <a href="" class="service-link">Learn More <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+<!--                 
+                <div class="col-md-6 col-lg-4">
+                    <div class="service-card academic">
+                        <div class="service-icon">
+                            <i class="fas fa-user-graduate"></i>
+                        </div>
+                        <h4 class="service-title">Secondary Education</h4>
+                        <p class="service-description">
+                            Advanced secondary education preparing students for national examinations and 
+                            future academic pursuits.
+                        </p>
+                        <ul class="service-features">
+                            <li><i class="fas fa-check-circle"></i> Grades 8-12</li>
+                            <li><i class="fas fa-check-circle"></i> Exam preparation</li>
+                            <li><i class="fas fa-check-circle"></i> Career guidance</li>
+                            <li><i class="fas fa-check-circle"></i> Advanced subjects</li>
+                        </ul>
+                        <div class="service-footer">
+                            <span class="service-age">Grades: 8-12</span>
+                            <a href="" class="service-link">Learn More <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+
+        <!-- Special Programs
+        <div class="services-section mb-5" id="special-programs">
+            <div class="section-header text-center mb-5">
+                <h4 class="section-title">Special Programs</h4>
+                <p class="section-subtitle">Enrichment programs for comprehensive student development</p>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-3">
+                    <div class="service-card special">
+                        <div class="service-icon">
+                            <i class="fas fa-flask"></i>
+                        </div>
+                        <h4 class="service-title">STEM Program</h4>
+                        <p class="service-description">
+                            Hands-on Science, Technology, Engineering, and Mathematics program to foster 
+                            innovation and problem-solving skills.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-3">
+                    <div class="service-card special">
+                        <div class="service-icon">
+                            <i class="fas fa-paint-brush"></i>
+                        </div>
+                        <h4 class="service-title">Arts & Culture</h4>
+                        <p class="service-description">
+                            Creative arts program including music, dance, drama, and visual arts to 
+                            nurture artistic talents and cultural appreciation.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-3">
+                    <div class="service-card special">
+                        <div class="service-icon">
+                            <i class="fas fa-futbol"></i>
+                        </div>
+                        <h4 class="service-title">Sports Academy</h4>
+                        <p class="service-description">
+                            Comprehensive sports program with professional coaching in various disciplines 
+                            for physical fitness and team spirit (Football and Athletics).
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-3">
+                    <div class="service-card special">
+                        <div class="service-icon">
+                            <i class="fas fa-language"></i>
+                        </div>
+                        <h4 class="service-title">Language Program</h4>
+                        <p class="service-description">
+                            Language learning program including English, Swahili, and optional foreign 
+                            languages for global communication skills.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>-->
+    </div>
+</section>
+
+<!-- FAQ Section -->
+<section class="faq-section py-5 bg-light fadeIn">
+    <div class="container">
+        <div class="section-header text-center mb-5">
+            <h4 class="section-title">Frequently Asked Questions</h4>
+            <p class="lead text-white">Get answers to common questions about our services</p>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-12 mx-auto">
+                <div class="accordion" id="servicesFAQ">
+                    <!-- FAQ Item 1 -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                                What age groups do you accept?
+                            </button>
+                        </h2>
+                        <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#servicesFAQ">
+                            <div class="accordion-body">
+                                We accept students from age 3 (Pre-School) through age 12 (Primary). Our programs are 
+                                divided into Pre-School (3-5 years), and Primary (6-12 years).
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ Item 2 -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                                What is the admission process?
+                            </button>
+                        </h2>
+                        <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#servicesFAQ">
+                            <div class="accordion-body">
+                                The admission process involves: 1) Submitting an application form, 2) Academic assessment, 
+                                3) Parent interview, and 4) Submission of required documents. Please contact our 
+                                admissions office for detailed information.
+                            </div>
+                        </div>
+                    </div>
+                    <!-- FAQ Item 4 -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
+                                What extracurricular activities are available?
+                            </button>
+                        </h2>
+                        <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#servicesFAQ">
+                            <div class="accordion-body">
+                                We offer a wide range of extracurricular activities including sports (football, basketball, 
+                                athletics), arts (music, drama, visual arts), clubs (science, debate), and 
+                                community service programs. Activities are designed to develop various skills and talents.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ Item 5 -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq5">
+                                What safety measures are in place?
+                            </button>
+                        </h2>
+                        <div id="faq5" class="accordion-collapse collapse" data-bs-parent="#servicesFAQ">
+                            <div class="accordion-body">
+                                Student safety is our top priority. We have 24/7 security personnel, regular safety drills, and a comprehensive child protection 
+                                policy. All staff undergo thorough background checks and safety training.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-5">
+                    <p class="text-white">Have more questions?</p>
+                    <a href="{% url 'contact' %}" class="btn  btn-sm btn-primary">
+                        <i class="fas fa-question-circle me-2"></i> Ask a Question
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Additional styles specific to services page */
+</style>
+{% endblock %}

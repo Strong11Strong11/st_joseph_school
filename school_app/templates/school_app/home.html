@@ -1,0 +1,250 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+    <!-- Hero Section with Carousel -->
+    <section class="hero-section py-5">
+        <div class="container">
+            <div class="row">
+                <!-- News Carousel -->
+                <div class="col-lg-8 mb-4 mb-lg-0">
+                    <div class="hero-carousel">
+                        <div id="newsCarousel" class="carousel slide" data-bs-ride="carousel">
+                            {% if latest_news %}
+                            <!-- Indicators -->
+                            <!-- <div class="carousel-indicators">
+                                {% for news in latest_news %}
+                                <button type="button" data-bs-target="#newsCarousel" 
+                                        data-bs-slide-to="{{ forloop.counter0 }}" 
+                                        class="{% if forloop.first %}active{% endif %}" 
+                                        aria-label="Slide {{ forloop.counter }}"></button>
+                                {% endfor %}
+                            </div> -->
+                            
+                            <!-- Carousel Items -->
+                            <div class="carousel-inner">
+                                {% for news in latest_news|slice:":7" %}
+                                <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                                    {% if news.image %}
+                                    <img src="{{ news.image.url }}" class="d-block w-100" alt="{{ news.title }}">
+                                    {% else %}
+                                    <div class="d-block w-100 bg-gradient" 
+                                         style="background: linear-gradient(135deg, var(--pastel-maroon) 0%, var(--light-green) 100%); height: 500px;">
+                                        <div class="h-100 d-flex align-items-center justify-content-center">
+                                            <i class="fas fa-newspaper fa-5x text-white"></i>
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                    <div class="carousel-overlay">
+                                        <p class="carousel-text">{{ news.content|truncatewords:25 }}</p>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                            
+                            <!-- Controls -->
+                            <button class="carousel-control-prev" type="button" data-bs-target="#newsCarousel" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#newsCarousel" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
+
+                            {% else %}
+
+                            <!-- No News Available -->
+                            <div class="carousel-inner">
+                                <div class="carousel-item active">
+                                    <div class="d-block w-100 bg-gradient" 
+                                         style="background: linear-gradient(135deg, var(--pastel-maroon) 0%, var(--light-green) 100%); height: 500px;">
+                                        <div class="h-100 d-flex flex-column align-items-center justify-content-center text-white text-center p-4">
+                                            <i class="fas fa-newspaper fa-5x mb-4"></i>
+                                            <h4 class="display-5 mb-3">Latest News & Announcements</h4>
+                                            <p class="lead mb-4">Stay updated with school activities, events, and important notices</p>
+                                            {% if user.is_staff %}
+                                            <a href="{% url 'add_news' %}" class="btn btn-light btn-lg">
+                                                <i class="fas fa-plus me-2"></i>Add First News
+                                            </a>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Welcome Card -->
+                <div class="col-lg-4">
+                    <div class="hero-info-card welcome-card">
+                        <h6 class="welcome-title">St. Joseph Mission School</h6>
+                        <p class="welcome-text">
+                            A premier educational institution dedicated to academic excellence, 
+                            character development, and holistic growth of every student.
+                        </p>
+                        
+                        <div class="school-motto">
+                            <i class="fas fa-quote-left me-2"></i>
+                            {{ school_info.motto|default:"Excellence in Education and Character Building" }}
+                            <i class="fas fa-quote-right ms-2"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Statistics Section -->
+    <section class="stat-counter">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 col-6">
+                    <div class="stat-item">
+                        <span class="stat-number">4+</span>
+                        <span class="stat-label">Years Experience</span>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="stat-item">
+                        <span class="stat-number">50+</span>
+                        <span class="stat-label">Students</span>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="stat-item">
+                        <span class="stat-number">10+</span>
+                        <span class="stat-label">Qualified Staff</span>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="stat-item">
+                        <span class="stat-number">100%</span>
+                        <span class="stat-label">Pass Rate</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-5">
+        <div class="container fade-up">
+            <h4 class="text-center mb-5 section-title">Why Choose St Joseph?</h4>
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="feature-highlight">
+                        <i class="fas fa-graduation-cap"></i>
+                        <h4>Academic Excellence</h4>
+                        <p>Consistently achieving outstanding results in national examinations</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="feature-highlight">
+                        <i class="fas fa-heart"></i>
+                        <h4>Character Building</h4>
+                        <p>Focusing on moral values and personal development</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="feature-highlight">
+                        <i class="fas fa-futbol"></i>
+                        <h4>Sports & Activities</h4>
+                        <p>Comprehensive extracurricular program for holistic growth</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Principal's Message -->
+    {% if school_info.principal_message %}
+    <section class="py-5 bg-light" id="about">
+        <div class="container">
+            <h4 class="text-center mb-5">Principal's Message</h4>
+            <div class="row align-items-center">
+                <div class="col-md-4 text-center">
+                    <img src="{% static 'images/principal.jpg' %}" alt="Principal" class="rounded-circle img-fluid" style="max-width: 250px;">
+                    <h6 class="mt-3">{{ school_info.principal_name|default:"Principal's Name" }}</h6>
+                </div>
+                <div class="col-md-8">
+                    <blockquote class="blockquote">
+                        <p class="lead text-justify">{{ school_info.principal_message }}</p>
+                    </blockquote>
+                </div>
+            </div>
+        </div>
+    </section>
+    {% endif %}
+
+    <!-- Latest News Grid Section -->
+    <section class="py-5" id="news">
+        <div class="container">
+            <h4 class="section-title">Latest News & Announcements</h4>
+            <div class="d-flex align-items-center mb-4">
+                <!-- <a href="{% url 'all_news' %}" class="btn btn-outline-primary text-white bg-primary btn-sm">View All News</a> -->
+            </div>
+            
+            {% if latest_news %}
+            <div class="row">
+                {% for news in latest_news|slice:":3" %}
+                <div class="col-md-4 mb-4">
+                    <div class="card news-card h-100">
+                        {% if news.image %}
+                        <img src="{{ news.image.url }}" class="card-img-top" alt="{{ news.title }}" style="height: 200px; object-fit: cover; object-position: top center;">
+                        {% endif %}
+                        <div class="card-body">
+                            <!-- <span class="badge bg-{% if news.news_type == 'announcement' %}primary{% elif news.news_type == 'event' %}success{% else %}info{% endif %} news-badge">
+                                {{ news.get_news_type_display }}
+                            </span> -->
+                            <h6 class="card-title mt-2 text-dark">{{ news.title }}</h6>
+                            <p class="card-text text-justify">
+                                {{ news.content|truncatewords:30 }}
+                            </p>
+                            <small class="text-muted">
+                                <i class="far fa-calendar"></i> {{ news.created_at|date:"F d, Y" }}
+                            </small>
+                        </div>
+                        <div class="card-footer bg-transparent border-top-0">
+                            <a href="{% url 'news_detail' news.slug %}" class="btn btn-sm btn-outline-primary">Read More</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="text-center py-5">
+                <i class="fas fa-newspaper fa-3x text-muted mb-3"></i>
+                <h4>No news available yet</h4>
+                <p class="text-muted">Check back later for updates</p>
+            </div>
+            {% endif %}
+        </div>
+    </section>
+{% endblock %}
+{% block extra_js %}
+<script>
+    // Auto-rotate carousel every 5 seconds
+    document.addEventListener('DOMContentLoaded', function() {
+        const newsCarousel = document.getElementById('newsCarousel');
+        if (newsCarousel) {
+            const carousel = new bootstrap.Carousel(newsCarousel, {
+                interval: 5000,
+                wrap: true
+            });
+            
+            // Pause on hover
+            newsCarousel.addEventListener('mouseenter', function() {
+                carousel.pause();
+            });
+            
+            newsCarousel.addEventListener('mouseleave', function() {
+                carousel.cycle();
+            });
+        }
+    });
+</script>
+{% endblock %}

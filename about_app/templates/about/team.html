@@ -1,0 +1,205 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Our Team{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'about' %}">About</a></li>
+            <li class="breadcrumb-item active">Our Team</li>
+        </ol>
+    </nav>
+
+    <!-- Page Header -->
+    <div class="row mb-5">
+        <div class="col-12 text-center">
+            <h1 class="display-4 mb-3">Meet Our Team</h1>
+            <p class="lead">Dedicated educators and staff committed to excellence</p>
+            <div class="border-bottom mx-auto" style="width: 100px;"></div>
+        </div>
+    </div>
+
+    <!-- Leadership Team -->
+    {% if team_members.filter.position='principal' or team_members.filter.position='vice_principal' %}
+    <section class="mb-5">
+        <h2 class="text-center mb-5">Leadership Team</h2>
+        <div class="row justify-content-center">
+            {% for member in team_members %}
+                {% if member.position == 'principal' or member.position == 'vice_principal' %}
+                <div class="col-md-6 mb-4">
+                    <div class="card h-100 shadow-lg border-0" id="member-{{ member.id }}">
+                        <div class="row g-0">
+                            <div class="col-md-5">
+                                {% if member.image %}
+                                <img src="{{ member.image.url }}" class="img-fluid h-100 w-100" alt="{{ member.name }}" style="object-fit: cover;">
+                                {% else %}
+                                <div class="h-100 bg-light d-flex align-items-center justify-content-center">
+                                    <i class="fas fa-user fa-7x text-secondary"></i>
+                                </div>
+                                {% endif %}
+                            </div>
+                            <div class="col-md-7">
+                                <div class="card-body">
+                                    <h3 class="card-title">{{ member.name }}</h3>
+                                    <p class="text-primary fs-5">{{ member.get_position_display }}</p>
+                                    
+                                    {% if member.qualification %}
+                                    <p><strong>Qualification:</strong> {{ member.qualification }}</p>
+                                    {% endif %}
+                                    
+                                    {% if member.department %}
+                                    <p><strong>Department:</strong> {{ member.department }}</p>
+                                    {% endif %}
+                                    
+                                    {% if member.bio %}
+                                    <p class="card-text mt-3">{{ member.bio|truncatewords:100 }}</p>
+                                    {% endif %}
+                                    
+                                    <div class="mt-3">
+                                        {% if member.email %}
+                                        <a href="mailto:{{ member.email }}" class="btn btn-outline-primary btn-sm">
+                                            <i class="fas fa-envelope"></i> Email
+                                        </a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </section>
+    {% endif %}
+
+    <!-- Teaching Staff -->
+    {% if team_members.filter.position='teacher' %}
+    <section class="mb-5">
+        <h2 class="text-center mb-5">Teaching Staff</h2>
+        <div class="row">
+            {% for member in team_members %}
+                {% if member.position == 'teacher' %}
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 shadow-sm" id="member-{{ member.id }}">
+                        {% if member.image %}
+                        <img src="{{ member.image.url }}" class="card-img-top" alt="{{ member.name }}" style="height: 250px; object-fit: cover;">
+                        {% else %}
+                        <div class="bg-light d-flex align-items-center justify-content-center" style="height: 250px;">
+                            <i class="fas fa-user fa-5x text-secondary"></i>
+                        </div>
+                        {% endif %}
+                        <div class="card-body text-center">
+                            <h5 class="card-title">{{ member.name }}</h5>
+                            <p class="text-primary">{{ member.get_position_display }}</p>
+                            
+                            {% if member.department %}
+                            <p class="text-muted"><small>{{ member.department }}</small></p>
+                            {% endif %}
+                            
+                            {% if member.qualification %}
+                            <p class="card-text"><small>{{ member.qualification }}</small></p>
+                            {% endif %}
+                            
+                            <div class="mt-3">
+                                <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modal{{ member.id }}">
+                                    View Profile
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </section>
+    {% endif %}
+
+    <!-- Support Staff -->
+    {% if team_members.filter.position='staff' %}
+    <section class="mb-5">
+        <h2 class="text-center mb-5">Support Staff</h2>
+        <div class="row">
+            {% for member in team_members %}
+                {% if member.position == 'staff' %}
+                <div class="col-md-3 mb-4">
+                    <div class="card h-100 border-0 text-center">
+                        <div class="card-body">
+                            <div class="rounded-circle bg-light mx-auto mb-3 d-flex align-items-center justify-content-center" style="width: 100px; height: 100px;">
+                                <i class="fas fa-user fa-3x text-secondary"></i>
+                            </div>
+                            <h6 class="card-title">{{ member.name }}</h6>
+                            <p class="text-muted"><small>{{ member.get_position_display }}</small></p>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </section>
+    {% endif %}
+</div>
+
+<!-- Modals for Teacher Profiles -->
+{% for member in team_members %}
+    {% if member.position == 'teacher' %}
+    <div class="modal fade" id="modal{{ member.id }}" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">{{ member.name }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            {% if member.image %}
+                            <img src="{{ member.image.url }}" class="img-fluid rounded" alt="{{ member.name }}">
+                            {% endif %}
+                        </div>
+                        <div class="col-md-8">
+                            <h5>{{ member.get_position_display }}</h5>
+                            
+                            {% if member.department %}
+                            <p><strong>Department:</strong> {{ member.department }}</p>
+                            {% endif %}
+                            
+                            {% if member.qualification %}
+                            <p><strong>Qualification:</strong> {{ member.qualification }}</p>
+                            {% endif %}
+                            
+                            {% if member.join_date %}
+                            <p><strong>Joined:</strong> {{ member.join_date|date:"F Y" }}</p>
+                            {% endif %}
+                            
+                            {% if member.bio %}
+                            <hr>
+                            <p>{{ member.bio|linebreaks }}</p>
+                            {% endif %}
+                            
+                            {% if member.email %}
+                            <hr>
+                            <p>
+                                <i class="fas fa-envelope me-2"></i>
+                                <a href="mailto:{{ member.email }}">{{ member.email }}</a>
+                            </p>
+                            {% endif %}
+                            
+                            {% if member.phone %}
+                            <p>
+                                <i class="fas fa-phone me-2"></i>
+                                {{ member.phone }}
+                            </p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+{% endfor %}
+{% endblock %}

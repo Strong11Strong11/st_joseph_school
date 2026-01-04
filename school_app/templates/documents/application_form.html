@@ -1,0 +1,177 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Application Forms{% endblock %}
+
+{% block content %}
+<div class="page-header-wrapper">
+    <div class="page-header-bg">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-title text-center">Application Forms</h1>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{% url 'home' %}" class="text-white">Home</a></li>
+                            <li class="breadcrumb-item"><a href="" class="text-white">Resources</a></li>
+                            <li class="breadcrumb-item active text-dark" aria-current="page">Application Forms</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="section-padding mb-3 mt-3">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="section-header mb-5">
+                    <h4 class="section-title">Download Application Forms</h4>
+                    <p class="lead">{{ description }}</p>
+                </div>
+
+                <div class="instructions-box mb-5">
+                    <h4 class="mb-3"><i class="fas fa-clipboard-list me-2"></i>Submission Instructions</h4>
+                    <ol class="instructions-list">
+                        {% for instruction in instructions %}
+                        <li>{{ instruction }}</li>
+                        {% endfor %}
+                    </ol>
+                </div>
+
+                <div class="forms-list">
+                    {% for document in documents %}
+                    <div class="form-card mb-4">
+                        <div class="form-header">
+                            <div class="form-icon">
+                                <i class="{{ document.get_icon_class }} fa-2x"></i>
+                            </div>
+                            <div class="form-title">
+                                <h4>{{ document.title }}</h4>
+                                {% if document.description %}
+                                <p class="form-description mb-0">{{ document.description }}</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="form-body">
+                            <div class="form-meta">
+                                <span class="badge bg-primary">{{ document.get_file_type_display }}</span>
+                                <span class="file-size">{{ document.file_size }}</span>
+                                <span class="downloads-count text-muted ms-3">
+                                    <i class="fas fa-download me-1"></i>{{ document.download_count }}
+                                </span>
+                            </div>
+                            <div class="form-actions mt-3">
+                                <a href="{% url 'download_document' document.slug %}" class="btn btn-primary btn-download" download>
+                                    <i class="fas fa-download me-2"></i>Download
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle me-2"></i>
+                        No application forms available yet.
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <div class="info-box mt-5">
+                    <div class="info-box-header">
+                        <h3><i class="fas fa-exclamation-circle me-2"></i>Important Notes</h3>
+                    </div>
+                    <div class="info-box-content">
+                        <ul class="fa-ul">
+                            <li><span class="fa-li"><i class="fas fa-check text-success"></i></span>
+                                All forms must be filled completely and signed where required.
+                            </li>
+                            <li><span class="fa-li"><i class="fas fa-check text-success"></i></span>
+                                Incomplete forms will not be processed.
+                            </li>
+                            <li><span class="fa-li"><i class="fas fa-check text-success"></i></span>
+                                Submit forms before the deadline to avoid late submission penalties.
+                            </li>
+                            <li><span class="fa-li"><i class="fas fa-check text-success"></i></span>
+                                Keep a copy of the submitted form for your records.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="sidebar-widget">
+                    <div class="widget-header">
+                        <h4 class="text-white"><i class="fas fa-paperclip me-2"></i>Required Documents</h4>
+                    </div>
+                    <div class="widget-content">
+                        <div class="documents-list">
+                            <div class="document-item">
+                                <i class="fas fa-file-contract text-primary me-2"></i>
+                                <span>Birth Certificate (copy)</span>
+                            </div>
+                            <div class="document-item">
+                                <i class="fas fa-file-medical text-primary me-2"></i>
+                                <span>Medical Report</span>
+                            </div>
+                            <div class="document-item">
+                                <i class="fas fa-file-invoice text-primary me-2"></i>
+                                <span>Previous School Reports</span>
+                            </div>
+                            <div class="document-item">
+                                <i class="fas fa-passport text-primary me-2"></i>
+                                <span>Passport Photos (4 copies)</span>
+                            </div>
+                            <div class="document-item">
+                                <i class="fas fa-file-signature text-primary me-2"></i>
+                                <span>Transfer Letter (if applicable)</span>
+                            </div>
+                            <div class="document-item">
+                                <i class="fas fa-id-card text-primary me-2"></i>
+                                <span>Parent/Guardian ID (copy)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sidebar-widget mt-4">
+                    <div class="widget-header">
+                        <h4 class="text-white"><i class="fas fa-map-marker-alt me-2"></i>Submission Points</h4>
+                    </div>
+                    <div class="widget-content">
+                        <div class="submission-points">
+                            <p><strong>Physical Submission:</strong></p>
+                            <p>School Administration Office<br>
+                            St. Joseph Mission School<br>
+                            Monday - Friday: 8:00 AM - 4:00 PM</p>
+                            
+                            <p class="mt-3"><strong>Email Submission:</strong></p>
+                            <p><i class="fas fa-envelope me-2"></i> admissions@stjosephmission.edu</p>
+                            
+                            <p class="mt-3"><strong>Online Portal:</strong></p>
+                            <p><i class="fas fa-globe me-2"></i> Coming Soon</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sidebar-widget mt-4">
+                    <div class="widget-header">
+                        <h4 class="text-white"><i class="fas fa-question-circle me-2"></i>Need Assistance?</h4>
+                    </div>
+                    <div class="widget-content">
+                        <p>For help with application forms, contact:</p>
+                        <div class="contact-widget">
+                            <p><i class="fas fa-user me-2"></i> Registrar's Office</p>
+                            <p><i class="fas fa-phone me-2"></i> +255 620 213 803</p>
+                            <p><i class="fas fa-envelope me-2"></i> registrar@stjosephmission.edu</p>
+                            <p><i class="fab fa-whatsapp me-2"></i> +255 623 113 346</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

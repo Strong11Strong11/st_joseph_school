@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Manage Documents{% endblock %}
+
+{% block content %}
+<div class="page-header-wrapper">
+    <div class="page-header-bg">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-title text-center">Manage Documents</h1>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{% url 'home' %}" class="text-white">Home</a></li>
+                            <li class="breadcrumb-item"><a href="#" class="text-white">Staff</a></li>
+                            <li class="breadcrumb-item active text-dark" aria-current="page">Manage Documents</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="section-padding mb-2 mt-3">
+    <div class="container col-lg-12">
+        <!-- Action Buttons -->
+        <div class="row mb-4">
+            <div class="col-lg-12">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h4 class="section-title">Document Management</h4>
+                    <div>
+                        <a href="{% url 'add_document' %}" class="btn btn-sm btn-outline-primary me-2">
+                            <i class="fas fa-plus me-2"></i>Upload Document
+                        </a>
+                        <a href="{% url 'manage_categories' %}" class="btn btn-sm btn-outline-primary me-2">
+                            <i class="fas fa-folder me-2"></i>Manage Categories
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Documents Table -->
+        <div class="card">
+            <div class="card-header bg-white">
+                <h4 class="mb-0">All Documents ({{ documents.count }})</h4>
+            </div>
+            <div class="card-body">
+                {% if documents %}
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Category</th>
+                                <th>Type</th>
+                                <th>Size</th>
+                                <th>Downloads</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for doc in documents %}
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <i class="{{ doc.get_icon_class }} me-2 fa-lg"></i>
+                                        <div>
+                                            <strong>{{ doc.title }}</strong>
+                                            {% if doc.requires_login %}
+                                            <span class="badge bg-info ms-2">Login Required</span>
+                                            {% endif %}
+                                            {% if doc.description %}
+                                            <p class="text-muted mb-0 small">{{ doc.description|truncatewords:10 }}</p>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="badge bg-secondary">{{ doc.category.name }}</span>
+                                </td>
+                                <td>{{ doc.get_file_type_display }}</td>
+                                <td>{{ doc.file_size }}</td>
+                                <td>
+                                    <span class="badge {% if doc.download_count > 0 %}bg-success{% else %}bg-light text-dark{% endif %}">
+                                        {{ doc.download_count }}
+                                    </span>
+                                </td>
+                                <td>
+                                    {% if doc.is_active %}
+                                    <span class="badge bg-success">Active</span>
+                                    {% else %}
+                                    <span class="badge bg-danger">Inactive</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <div class="btn-group btn-group-sm">
+                                        <a href="{{ doc.file.url }}" class="btn btn-outline-primary" target="_blank" download>
+                                            <i class="fas fa-download"></i>
+                                        </a>
+                                        <a href="{% url 'edit_document' document.slug  %}" class="btn btn-outline-warning">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a href="{% url 'delete_document' document.slug %}" class="btn btn-outline-danger">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="text-center py-5">
+                    <i class="fas fa-file-upload fa-2x text-muted mb-3"></i>
+                    <h6>No documents uploaded yet</h6>
+                    <p class="text-muted">Start by uploading your first document</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,495 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}About Us{% endblock %}
+
+{% block extra_css %}
+<style>
+    .history-slide-1 {
+        background-image: url('{% static "images/img-1.jpg" %}');
+    }
+
+    .history-slide-2 {
+        background-image: url('{% static "images/img-2.jpg" %}');
+    }
+    
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Page Header with Background Image -->
+<div class="page-header-wrapper">
+    <div class="page-header-bg">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <h1 class="page-title">{{ about_page.title }}</h1>
+                    <div class="page-title-divider"></div>
+                    <p class="lead text-white mb-0">Discover our journey, values, and commitment to excellence</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Main Content -->
+<div class="container content-section" style="margin-top: -50px;">
+    {% if about_page.history %}
+    <section class="section-content history-section" id="history-section">
+        <h2 class="section-title mb-5">Our History</h2>
+        <div class="row">
+            <!-- Image Slider on Left -->
+            <div class="col-lg-6 mb-4 mb-lg-0">
+                <div class="history-image-slider">
+                    <div class="history-slide history-slide-1 active">
+                        <div class="image-fallback" style="display: none;">
+                            <i class="fas fa-school"></i>
+                            <p>School History Image 1</p>
+                            <small class="text-muted">Add images to static/images/history-1.jpg</small>
+                        </div>
+                    </div>
+                    <!-- Slide 2 -->
+                    <div class="history-slide history-slide-2">
+                        <div class="image-fallback" style="display: none;">
+                            <i class="fas fa-graduation-cap"></i>
+                            <p>School History Image 2</p>
+                            <small class="text-muted">Add images to static/images/history-2.jpg</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Content on Right -->
+            <div class="col-lg-6">
+                <div class="history-content">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body p-4">
+                            <p class="lead text-justify">{{ about_page.history|linebreaks }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    <!-- Mission & Vision -->
+    <div class="row section-content mt-5">
+        {% if about_page.mission %}
+        <div class="col-md-6 mb-4">
+            <div class="card h-100 border-primary shadow-sm">
+                <div class="card-body text-center p-4">
+                    <i class="fas fa-bullseye fa-3x text-primary mb-3"></i>
+                    <h3 class="card-title">Our Mission</h3>
+                    <p class="card-text">{{ about_page.mission|linebreaks }}</p>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        
+        {% if about_page.vision %}
+        <div class="col-md-6 mb-4">
+            <div class="card h-100 border-success shadow-sm">
+                <div class="card-body text-center p-4">
+                    <i class="fas fa-eye fa-3x text-success mb-3"></i>
+                    <h3 class="card-title">Our Vision</h3>
+                    <p class="card-text">{{ about_page.vision|linebreaks }}</p>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Core Values -->
+    {% if about_page.values %}
+        <h2 class="section-title"><i class="fas fa-heart text-danger me-2"></i>Core Values</h2>
+        <div class="row">
+            {% for value in about_page.values.split %}
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center">
+                        <i class="fas fa-star text-warning fa-2x mb-3"></i>
+                        <h5 class="card-title">{{ value.strip }}</h5>
+                        <p class="card-text text-muted">We uphold this value in all our endeavors</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+    {% endif %}
+</div>
+<!-- Team Section -->
+{% if team_members %} 
+<section class="py-5" id="staff-member" style="margin-top: -125px;">
+    <div class="container">
+        <h2 class="section-title text-center text-white">Our Staff</h2>
+        
+        <div class="team-carousel-wrapper">
+            <div class="team-carousel">
+                {% for member in team_members %}
+                <div class="team-carousel-slide {% if forloop.first %}active{% endif %}" id="teamSlide{{ forloop.counter0 }}">
+                    <div class="team-carousel-card">
+                        <!-- Team Member Image -->
+                        <div class="team-carousel-image">
+                            {% if member.image %}
+                            <img src="{{ member.image.url }}" alt="{{ member.name }}" class="team-member-carousel-img">
+                            {% else %}
+                            <div class="team-member-carousel-placeholder">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            {% endif %}
+                        </div>
+                        
+                        <!-- Team Member Info -->
+                        <div class="team-carousel-content">
+                            <h3 class="team-carousel-name">{{ member.name }}</h3>
+                            <p class="team-carousel-position text-dark">{{ member.get_position_display }}</p>
+                            
+                            {% if member.department %}
+                            <p class="team-carousel-department"><i class="fas fa-briefcase me-2"></i>{{ member.department }}</p>
+                            {% endif %}
+                            
+                            {% if member.qualification %}
+                            <p class="team-carousel-qualification"><i class="fas fa-graduation-cap me-2"></i>{{ member.qualification }}</p>
+                            {% endif %}
+                            
+                            {% if member.email %}
+                            <p class="team-carousel-email"><i class="fas fa-envelope me-2"></i>{{ member.email }}</p>
+                            {% endif %}
+                            
+                            {% if member.phone %}
+                            <p class="team-carousel-phone"><i class="fas fa-phone me-2"></i>{{ member.phone }}</p>
+                            {% endif %}
+                            
+                            {% if member.bio %}
+                            <div class="team-carousel-bio">
+                                <p>{{ member.bio|truncatewords:40|linebreaks }}</p>
+                            </div>
+                            {% endif %}
+                            
+                            <div class="team-carousel-contact">
+                                {% if member.email %}
+                                <a href="mailto:{{ member.email }}" class="team-contact-link" title="Email {{ member.name }}">
+                                    <i class="fas fa-envelope"></i>
+                                </a>
+                                {% endif %}
+                                
+                                {% if member.phone %}
+                                <a href="tel:{{ member.phone }}" class="team-contact-link" title="Call {{ member.name }}">
+                                    <i class="fas fa-phone"></i>
+                                </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            
+            <!-- Carousel Controls -->
+            <div class="team-carousel-controls">
+                <button class="team-carousel-prev" aria-label="Previous team member">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                
+                <!-- Dots Indicator -->
+                <div class="team-carousel-dots">
+                    {% for member in team_members %}
+                    <button class="team-carousel-dot {% if forloop.first %}active{% endif %}" 
+                            data-slide="{{ forloop.counter0 }}" 
+                            aria-label="Go to team member {{ forloop.counter }}">
+                    </button>
+                    {% endfor %}
+                </div>
+                
+                <button class="team-carousel-next" aria-label="Next team member">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Facilities -->
+{% if facilities %}
+<section class="py-5">
+    <div class="container">
+        <h2 class="section-title mb-5">Our Facilities</h2>
+        <div class="row">
+            {% for facility in facilities %}
+            <div class="col-md-4 mb-4">
+                <div class="card facility-card">
+                    {% if facility.image %}
+                    <img src="{{ facility.image.url }}" class="card-img-top" alt="{{ facility.name }}" style="height: 200px; object-fit: cover;">
+                    {% else %}
+                    <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
+                        <i class="fas fa-{{ facility.icon|default:'building' }} fa-3x text-primary"></i>
+                    </div>
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            {% if facility.icon %}
+                            <i class="{{ facility.icon }} me-2"></i>
+                            {% endif %}
+                            {{ facility.name }}
+                        </h5>
+                        <p class="card-text">{{ facility.description|truncatewords:30 }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Achievements -->
+{% if about_page.achievements %}
+<div class="container content-section">
+    <section class="section-content">
+        <h2 class="section-title"><i class="fas fa-trophy text-warning me-2"></i>Achievements & Awards</h2>
+        <div class="card border-warning">
+            <div class="card-body">
+                {{ about_page.achievements|linebreaks }}
+            </div>
+        </div>
+        <div class="text-center mt-4">
+            <a href="#" class="btn btn-warning">
+                <i class="fas fa-award me-2"></i>View Our Awards Gallery
+            </a>
+        </div>
+    </section>
+    {% endif %}
+</div>{% block extra_js %}
+<script>
+// Team Carousel - Wait for spinner to hide
+function initializeTeamCarousel() {
+    console.log("Initializing team carousel...");
+    
+    const slides = document.querySelectorAll('.team-carousel-slide');
+    const dots = document.querySelectorAll('.team-carousel-dot');
+    const prevBtn = document.querySelector('.team-carousel-prev');
+    const nextBtn = document.querySelector('.team-carousel-next');
+    const progressBar = document.querySelector('.team-carousel-progress');
+    const currentSlideSpan = document.getElementById('currentSlide');
+    const totalSlidesSpan = document.getElementById('totalSlides');
+    
+    console.log("Found:", {
+        slides: slides.length,
+        dots: dots.length,
+        prevBtn: !!prevBtn,
+        nextBtn: !!nextBtn
+    });
+    
+    if (slides.length === 0) {
+        console.error("No slides found!");
+        return;
+    }
+    
+    // Set total slides
+    if (totalSlidesSpan) {
+        totalSlidesSpan.textContent = slides.length;
+    }
+    
+    let currentIndex = 0;
+    let autoPlayInterval;
+    let isAutoPlaying = true;
+    
+    // Function to show slide
+    function showSlide(index) {
+        // Hide all slides
+        slides.forEach(slide => {
+            slide.classList.remove('active');
+        });
+        
+        // Remove active from all dots
+        dots.forEach(dot => {
+            dot.classList.remove('active');
+        });
+        
+        // Show the requested slide
+        if (slides[index]) {
+            slides[index].classList.add('active');
+        }
+        
+        // Activate corresponding dot
+        if (dots[index]) {
+            dots[index].classList.add('active');
+        }
+        
+        // Update current index
+        currentIndex = index;
+        
+        // Update counter
+        if (currentSlideSpan) {
+            currentSlideSpan.textContent = index + 1;
+        }
+        
+        // Reset progress bar
+        resetProgress();
+    }
+    
+    // Next slide
+    function nextSlide() {
+        let nextIndex = (currentIndex + 1) % slides.length;
+        showSlide(nextIndex);
+    }
+    
+    // Previous slide
+    function prevSlide() {
+        let prevIndex = (currentIndex - 1 + slides.length) % slides.length;
+        showSlide(prevIndex);
+    }
+    
+    // Reset progress bar
+    function resetProgress() {
+        if (progressBar) {
+            progressBar.style.transition = 'none';
+            progressBar.style.width = '0%';
+            
+            // Force reflow
+            progressBar.offsetHeight;
+            
+            setTimeout(() => {
+                if (isAutoPlaying) {
+                    progressBar.style.transition = 'width 5s linear';
+                    progressBar.style.width = '100%';
+                }
+            }, 10);
+        }
+    }
+    
+    // Start auto-play
+    function startAutoPlay() {
+        isAutoPlaying = true;
+        
+        if (autoPlayInterval) {
+            clearInterval(autoPlayInterval);
+        }
+        
+        autoPlayInterval = setInterval(nextSlide, 5000);
+        resetProgress();
+    }
+    
+    // Stop auto-play
+    function stopAutoPlay() {
+        isAutoPlaying = false;
+        
+        if (autoPlayInterval) {
+            clearInterval(autoPlayInterval);
+            autoPlayInterval = null;
+        }
+        
+        if (progressBar) {
+            progressBar.style.transition = 'none';
+            progressBar.style.width = '0%';
+        }
+    }
+    
+    // Initialize
+    showSlide(0);
+    startAutoPlay();
+    
+    // ===== EVENT LISTENERS =====
+    
+    // Next button
+    if (nextBtn) {
+        nextBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            stopAutoPlay();
+            nextSlide();
+            startAutoPlay();
+        });
+    }
+    
+    // Previous button
+    if (prevBtn) {
+        prevBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            stopAutoPlay();
+            prevSlide();
+            startAutoPlay();
+        });
+    }
+    
+    // Dots
+    dots.forEach((dot, index) => {
+        dot.addEventListener('click', function(e) {
+            e.preventDefault();
+            stopAutoPlay();
+            showSlide(index);
+            startAutoPlay();
+        });
+    });
+    
+    // Pause on hover
+    const carouselWrapper = document.querySelector('.team-carousel-wrapper');
+    if (carouselWrapper) {
+        carouselWrapper.addEventListener('mouseenter', stopAutoPlay);
+        carouselWrapper.addEventListener('mouseleave', startAutoPlay);
+    }
+    
+    // Keyboard navigation
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'ArrowRight') {
+            e.preventDefault();
+            stopAutoPlay();
+            nextSlide();
+            startAutoPlay();
+        } else if (e.key === 'ArrowLeft') {
+            e.preventDefault();
+            stopAutoPlay();
+            prevSlide();
+            startAutoPlay();
+        }
+    });
+    
+    console.log("✅ Team Carousel Initialized Successfully!");
+}
+
+// Wait for spinner to be hidden
+document.addEventListener('DOMContentLoaded', function() {
+    console.log("Page loaded, checking spinner...");
+    
+    const spinner = document.getElementById('loadingSpinner');
+    
+    if (!spinner) {
+        // No spinner, initialize immediately
+        console.log("No spinner found, initializing carousel");
+        setTimeout(initializeTeamCarousel, 100);
+        return;
+    }
+    
+    // Check if spinner is already hidden
+    if (spinner.classList.contains('loading-complete')) {
+        console.log("Spinner already hidden, initializing carousel");
+        setTimeout(initializeTeamCarousel, 100);
+        return;
+    }
+    
+    // Wait for spinner to hide
+    const checkSpinner = setInterval(function() {
+        if (spinner.classList.contains('loading-complete')) {
+            clearInterval(checkSpinner);
+            console.log("Spinner hidden, initializing carousel");
+            setTimeout(initializeTeamCarousel, 300);
+        }
+    }, 100);
+    
+    // Safety timeout
+    setTimeout(function() {
+        clearInterval(checkSpinner);
+        console.log("Safety timeout - initializing carousel anyway");
+        initializeTeamCarousel();
+    }, 3000);
+});
+
+// Also initialize on window load
+window.addEventListener('load', function() {
+    
+    console.log("Window loaded");
+
+});
+</script>
+{% endblock %}
+{% endblock %}

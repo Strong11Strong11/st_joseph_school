@@ -1,0 +1,108 @@
+/* Principal Message Section */
+#about {
+    background: linear-gradient(135deg, var(--pastel-maroon-light) 0%, var(--light-green-light) 100%);
+}
+
+.principal-message img {
+    border: 5px solid var(--white);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+blockquote {
+    border-left: 4px solid var(--pastel-maroon);
+    padding-left: 20px;
+    font-style: italic;
+}
+
+/* School Info Cards */
+.school-info-card {
+    background: var(--white);
+    border-radius: 15px;
+    padding: 30px;
+    height: 100%;
+    transition: all 0.3s ease;
+}
+
+.school-info-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(216, 165, 165, 0.15);
+}
+
+.school-info-card h4 {
+    color: var(--pastel-maroon-dark);
+    margin-bottom: 20px;
+}
+
+.school-info-card ul li {
+    padding: 10px 0;
+    border-bottom: 1px solid var(--medium-gray);
+    display: flex;
+    align-items: center;
+}
+
+.school-info-card ul li:last-child {
+    border-bottom: none;
+}
+
+.school-info-card ul li i {
+    color: var(--pastel-maroon);
+    width: 25px;
+}
+
+/* News Filter Tabs */
+.btn-group .btn-outline-primary.active {
+    background-color: var(--pastel-maroon);
+    color: var(--white);
+    border-color: var(--pastel-maroon);
+}
+
+/* Feature Highlights */
+.feature-highlight {
+    text-align: center;
+    padding: 30px 20px;
+    border-radius: 15px;
+    background: var(--white);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    height: 100%;
+}
+
+.feature-highlight:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(216, 165, 165, 0.15);
+}
+
+.feature-highlight i {
+    font-size: 3rem;
+    color: var(--pastel-maroon);
+    margin-bottom: 20px;
+}
+
+.feature-highlight h4 {
+    color: var(--pastel-maroon-dark);
+    margin-bottom: 15px;
+}
+
+/* Statistics Counter */
+.stat-counter {
+    background: linear-gradient(135deg, var(--pastel-maroon) 0%, var(--light-green) 100%);
+    color: var(--white);
+    padding: 60px 0;
+    text-align: center;
+}
+
+.stat-item {
+    margin: 20px 0;
+}
+
+.stat-number {
+    font-size: 3rem;
+    font-weight: 800;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.stat-label {
+    font-size: 1.2rem;
+    opacity: 0.9;
+}

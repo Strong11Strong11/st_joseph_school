@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}News & Announcements{% endblock %}
+
+{% block content %}
+<!-- Page Header with Background Image -->
+<div class="page-header-wrapper">
+    <div class="page-header-bg">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <h1 class="page-title">Explore More</h1>
+                    <div class="page-title-divider"></div>
+                    <p class="lead text-white mb-0">Discover our journey, values, and commitment to excellence</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container py-5">
+    <h4 class="mb-4">News & Announcements</h4>
+    
+    <!-- Filter Tabs -->
+    <div class="mb-4">
+        <div class="btn-group" role="group">
+            <a href="{% url 'all_news' %}" class="btn btn-sm btn-outline-primary {% if not current_type %}active{% endif %}">
+                All
+            </a>
+            <a href="{% url 'all_news' %}?type=announcement" class="btn btn-sm  btn-outline-primary {% if current_type == 'announcement' %}active{% endif %}">
+                Announcements
+            </a>
+            <a href="{% url 'all_news' %}?type=event" class="btn btn-sm  btn-outline-primary {% if current_type == 'event' %}active{% endif %}">
+                Events
+            </a>
+            <a href="{% url 'all_news' %}?type=achievement" class="btn btn-sm  btn-outline-primary {% if current_type == 'achievement' %}active{% endif %}">
+                Achievements
+            </a>
+        </div>
+    </div>
+
+    {% if news_items %}
+    <div class="row">
+        {% for news in news_items %}
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card news-card h-100">
+                {% if news.image %}
+                <img src="{{ news.image.url }}" class="card-img-top" alt="{{ news.title }}" style="height: 200px; object-fit: cover; object-position: top center;">
+                {% endif %}
+                <div class="card-body">
+                    <!-- <span class="badge bg-{% if news.news_type == 'announcement' %}primary{% elif news.news_type == 'event' %}success{% else %}info{% endif %} news-badge">
+                        {{ news.get_news_type_display }}
+                    </span> -->
+                    <h6 class="card-title mt-2 text-dark">{{ news.title }}</h6>
+                    <p class="card-text">{{ news.content|truncatewords:20 }}</p>
+                    <small class="text-muted">
+                        <i class="far fa-calendar"></i> {{ news.created_at|date:"M d, Y" }}
+                    </small>
+                </div>
+                <div class="card-footer bg-transparent">
+                    <a href="{% url 'news_detail' news.slug %}" class="btn btn-sm btn-outline-primary">Read More</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="text-center py-5">
+        <i class="fas fa-newspaper fa-3x text-muted mb-3"></i>
+        <h3>No news available</h3>
+        <p class="text-muted">There are no news items in this category yet.</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

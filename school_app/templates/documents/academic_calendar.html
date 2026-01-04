@@ -1,0 +1,161 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Academic Calendar{% endblock %}
+
+{% block content %}
+<div class="page-header-wrapper">
+    <div class="page-header-bg">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-title text-center">Academic Calendar</h1>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{% url 'home' %}" class="text-white">Home</a></li>
+                            <li class="breadcrumb-item"><a href="" class="text-white">Resources</a></li>
+                            <li class="breadcrumb-item active text-dark" aria-current="page">Academic Calendar</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="section-padding mt-3 mb-3 fadeIn">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="downloads-section">
+                    <div class="section-header mb-4">
+                        <h4 class="section-title">Download Academic Calendar</h4>
+                        <p class="lead">{{ description }}</p>
+                    </div>
+
+                    <div class="downloads-list">
+                        {% for document in documents %}
+                        <div class="download-card">
+                            <div class="download-icon">
+                                <i class="{{ document.get_icon_class }} fa-3x"></i>
+                            </div>
+                            <div class="download-info">
+                                <h4>{{ document.title }}</h4>
+                                {% if document.description %}
+                                <p class="text-muted mb-2">{{ document.description }}</p>
+                                {% endif %}
+                                <div class="file-meta">
+                                    <span class="badge bg-primary">{{ document.get_file_type_display }}</span>
+                                    <span class="file-size">{{ document.file_size }}</span>
+                                    <span class="downloads-count text-muted">
+                                        <i class="fas fa-download ms-3 me-1"></i>{{ document.download_count }}
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="download-action">
+                                <a href="{% url 'download_document' document.slug %}" class="btn btn-sm btn-outline-primary btn-download" download>
+                                    <i class="fas fa-download me-2"></i>Download
+                                </a>
+                            </div>
+                        </div>
+                        {% empty %}
+                        <div class="alert alert-info">
+                            <i class="fas fa-info-circle me-2"></i>
+                            No academic calendar documents available yet.
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="info-box mt-5">
+                    <div class="info-box-header">
+                        <h3><i class="fas fa-info-circle me-2"></i>Important Information</h3>
+                    </div>
+                    <div class="info-box-content">
+                        <ul class="fa-ul">
+                            <li><span class="fa-li"><i class="fas fa-check text-success"></i></span>
+                                All dates are subject to change. Please check for updates regularly.
+                            </li>
+                            <li><span class="fa-li"><i class="fas fa-check text-success"></i></span>
+                                Parent-Teacher meetings are mandatory for all parents.
+                            </li>
+                            <li><span class="fa-li"><i class="fas fa-check text-success"></i></span>
+                                School will be closed on national holidays as indicated in the calendar.
+                            </li>
+                            <li><span class="fa-li"><i class="fas fa-check text-success"></i></span>
+                                Examination dates are fixed and will not be changed except in emergencies.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="sidebar-widget">
+                    <div class="widget-header text-white">
+                        <h4 class="text-white"><i class="fas fa-calendar-week me-2"></i>Quick View</h4>
+                    </div>
+                    <div class="widget-content">
+                        <div class="calendar-highlights">
+                            <div class="highlight-item">
+                                <div class="highlight-date">
+                                    <span class="highlight-month">JAN</span>
+                                    <span class="highlight-day">13</span>
+                                </div>
+                                <div class="highlight-info">
+                                    <h6>First Term Begins</h6>
+                                    <p class="mb-0">Academic Year 2026</p>
+                                </div>
+                            </div>
+                            <div class="highlight-item">
+                                <div class="highlight-date">
+                                    <span class="highlight-month">JUNE</span>
+                                    <span class="highlight-day">27</span>
+                                </div>
+                                <div class="highlight-info">
+                                    <h6>First Term Ends</h6>
+                                    <p class="mb-0">Holiday Break begins</p>
+                                </div>
+                            </div>
+                            <div class="highlight-item">
+                                <div class="highlight-date">
+                                    <span class="highlight-month">JUL</span>
+                                    <span class="highlight-day">15</span>
+                                </div>
+                                <div class="highlight-info">
+                                    <h6>Second Term Begins</h6>
+                                    <p class="mb-0">Students report back</p>
+                                </div>
+                            </div>
+                            <!-- <div class="highlight-item">
+                                <div class="highlight-date">
+                                    <span class="highlight-month">APR</span>
+                                    <span class="highlight-day">05</span>
+                                </div>
+                                <div class="highlight-info">
+                                    <h6>Mid-Term Examinations</h6>
+                                    <p class="mb-0">All classes</p>
+                                </div>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sidebar-widget mt-4">
+                    <div class="widget-header">
+                        <h4 class="text-white"><i class="fas fa-headset me-2"></i>Need Help?</h4>
+                    </div>
+                    <div class="widget-content">
+                        <p>If you have questions about the academic calendar, contact:</p>
+                        <div class="contact-widget">
+                            <p><i class="fas fa-user me-2"></i> Academic Office</p>
+                            <p><i class="fas fa-phone me-2"></i> +255 620 213 803</p>
+                            <p><i class="fas fa-envelope me-2"></i> academic@stjosephmission.edu</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

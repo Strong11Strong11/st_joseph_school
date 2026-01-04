@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}{{ news.title }}{% endblock %}
+
+{% block content %}
+<!-- Page Header with Background Image -->
+<div class="page-header-wrapper">
+    <div class="page-header-bg">
+        <div class="container">
+             <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'home' %}" class=" text-white">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'all_news' %}" class="text-white">News</a></li>
+                    <li class="breadcrumb-item active  text-white">{{ news.title|truncatechars:50 }}</li>
+                </ol>
+            </nav>
+            <div class="row">
+                <div class="col-12 text-center">
+                    <h1 class="page-title">Latest News</h1>
+                    <div class="page-title-divider"></div>
+                    <p class="lead text-white mb-0">Discover our journey, values, and commitment to excellence</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container py-5">
+
+    <div class="row">
+        <div class="col-lg-12 mx-auto">
+            <article>
+                <h4 class="mb-3">{{ news.title }}</h4>
+                
+                <div class="d-flex align-items-center text-muted mb-4">
+                    <i class="far fa-calendar me-2"></i>
+                    <span>{{ news.created_at|date:"F d, Y" }}</span>
+                    <span class="mx-2">•</span>
+                    <i class="far fa-user me-2"></i>
+                    <span>{{ news.created_by.get_full_name|default:news.created_by.username }}</span>
+                </div>
+
+                {% if news.image %}
+                <img src="{{ news.image.url }}" alt="{{ news.title }}" class="img-fluid rounded mb-4">
+                {% endif %}
+
+                <div class="news-content mb-5">
+                    {{ news.content|linebreaks }}
+                </div>
+
+                <div class="border-top pt-4">
+                    <a href="{% url 'all_news' %}" class="btn btn-outline-primary">
+                        <i class="fas fa-arrow-left me-2"></i>Back to News
+                    </a>
+                </div>
+            </article>
+        </div>
+    </div>
+</div>
+{% endblock %}

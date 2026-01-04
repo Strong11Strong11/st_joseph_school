@@ -1,0 +1,473 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>St Joseph Mission School - {% block title %}{% endblock %}</title>
+    <link rel="icon" type="image/png" sizes="192x192" href="{% static 'images/logo.png' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+</head>
+<body>
+     <!-- Notification Container for Messages -->
+    <div class="notifications-container" id="notificationsContainer">
+        <!-- Messages will be inserted here by JavaScript -->
+    </div>
+
+    <!-- Beautiful Loading Spinner (10-second minimum) -->
+    <div class="loading-overlay" id="loadingSpinner">
+        <div class="loading-content">
+            <div class="spinner-container">
+                <div class="spinner-outer"></div>
+                <div class="spinner-middle"></div>
+                <div class="spinner-inner"></div>
+                <img src="{% static 'images/logo.png' %}" alt="School Logo" class="spinner-logo">
+            </div>
+            <h3 class="loading-text">St. Joseph Mission School<span class="dots"></span></h3>
+            <p class="loading-subtext">Onward & Upward, Love & Service</p>
+            
+            <!-- Progress bar -->
+            <div class="loading-progress">
+                <div class="loading-progress-bar" id="progressBar"></div>
+            </div>
+            <div class="loading-time" id="loadingTime">Loading: 0%</div>
+            
+            <!-- Random motivational quotes -->
+            <div class="loading-quote" id="loadingQuote">
+                Preparing your educational experience...
+            </div>
+        </div>
+    </div>
+    
+    <!-- Top Navigation Bar -->
+    <div class="top-nav">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="top-nav-info">
+                    <span class="ms-3"><i class="fas fa-phone me-1"></i> +255 620 213 803</span>
+                </div>
+                <div class="top-nav-links">
+                    {% if user.is_authenticated %}
+                        <span class="me-3">Welcome, {{ user.get_full_name|default:user.username }}</span>
+                        <form action="{% url 'logout' %}" method="post" style="display: inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn-logout">Logout</button>
+                        </form>
+                    {% else %}
+                        <a href="{% url 'login' %}" class="me-3"><i class="fas fa-sign-in-alt me-1"></i>Login</a>
+                        <!-- <a href="#" class="me-3"><i class="fas fa-user-plus me-1"></i>Register</a> -->
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Main Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light main-navbar">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'home' %}">
+            <div class="logo-container">
+                <img src="{% static 'images/logo.png' %}" alt="St Joseph Mission School Logo" class="school-logo">
+            </div>
+            <div class="brand-text">
+                <span class="school-tagline">Onward & Upward, Love & Service</span>
+            </div>
+        </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{% url 'home' %}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'services' %}">Academic Programs</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'all_news' %}">News</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'about' %}">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'contact' %}">Contact</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="resourcesDropdown" role="button" data-bs-toggle="dropdown">
+                            Resources
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{% url 'academic_calendar' %}"><i class="fas fa-calendar me-2"></i>Academic Calendar</a></li>
+                            <li><a class="dropdown-item" href="{% url 'admissions' %}"><i class="fas fa-graduation-cap me-2"></i>Admissions</a></li>
+                            <li><a class="dropdown-item" href="{% url 'application_form' %}"><i class="fas fa-file-alt me-2"></i>Application Form</a></li>
+                        </ul>
+                    </li>
+                    {% if user.is_staff %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle admin-link" href="#" id="adminDropdown" role="button" data-bs-toggle="dropdown">
+                            <i class="fas fa-cog me-1"></i>Admin
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{% url 'manage_documents' %}"><i class="fas fa-file-upload me-2"></i>Manage Documents</a></li>
+                            <li><a class="dropdown-item" href="{% url 'add_news' %}"><i class="fas fa-plus me-2"></i>Add News</a></li>
+                            <!-- <li><a class="dropdown-item" href="{% url 'manage_school_info' %}"><i class="fas fa-info-circle me-2"></i>School Info</a></li> -->
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="/admin/"><i class="fas fa-user-cog me-2"></i>Django Admin</a></li>
+                        </ul>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Testimonials Section with Mobile Carousel -->
+    <section class="testimonials-section py-5">
+        <div class="container">
+            <div class="section-header text-center mb-5">
+                <h4 class="display-7 fw-bold">What Parents & Students Say</h4>
+                <p class="lead text-muted">Hear from our school community</p>
+                <div class="header-divider"></div>
+            </div>
+            
+            <!-- Desktop Grid View (for tablets and larger) -->
+            <div class="d-none d-md-block">
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="testimonial-card">
+                            <div class="testimonial-content">
+                                <div class="quote-icon">
+                                    <i class="fas fa-quote-left"></i>
+                                </div>
+                                <p class="testimonial-text">
+                                    "St. Joseph Mission School has provided an excellent environment for my child's growth. The teachers are dedicated and caring."
+                                </p>
+                                <div class="rating">
+                                    <i class="fas fa-star text-warning"></i>
+                                    <i class="fas fa-star text-warning"></i>
+                                    <i class="fas fa-star text-warning"></i>
+                                    <i class="fas fa-star text-warning"></i>
+                                    <i class="fas fa-star text-warning"></i>
+                                </div>
+                            </div>
+                            <div class="testimonial-author">
+                                <div class="author-img">
+                                    <i class="fas fa-user-circle"></i>
+                                </div>
+                                <div class="author-info">
+                                    <h5>Sarah Johnson</h5>
+                                    <p class="mb-0">Parent of Grade 5 Student</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <div class="testimonial-card">
+                            <div class="testimonial-content">
+                                <div class="quote-icon">
+                                    <i class="fas fa-quote-left"></i>
+                                </div>
+                                <p class="testimonial-text">
+                                    "The holistic approach to education here is remarkable. My child excels academically while developing strong character."
+                                </p>
+                                <div class="rating">
+                                    <i class="fas fa-star text-warning"></i>
+                                    <i class="fas fa-star text-warning"></i>
+                                    <i class="fas fa-star text-warning"></i>
+                                    <i class="fas fa-star text-warning"></i>
+                                    <i class="fas fa-star text-warning"></i>
+                                </div>
+                            </div>
+                            <div class="testimonial-author">
+                                <div class="author-img">
+                                    <i class="fas fa-user-circle"></i>
+                                </div>
+                                <div class="author-info">
+                                    <h5>Michael Charles</h5>
+                                    <p class="mb-0">Parent of Grade 8 Student</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <div class="testimonial-card">
+                            <div class="testimonial-content">
+                                <div class="quote-icon">
+                                    <i class="fas fa-quote-left"></i>
+                                </div>
+                                <p class="testimonial-text">
+                                    "I love coming to school every day! The teachers make learning fun and the facilities are amazing."
+                                </p>
+                                <div class="rating">
+                                    <i class="fas fa-star text-warning"></i>
+                                    <i class="fas fa-star text-warning"></i>
+                                    <i class="fas fa-star text-warning"></i>
+                                    <i class="fas fa-star text-warning"></i>
+                                    <i class="fas fa-star text-warning"></i>
+                                </div>
+                            </div>
+                            <div class="testimonial-author">
+                                <div class="author-img">
+                                    <i class="fas fa-user-circle"></i>
+                                </div>
+                                <div class="author-info">
+                                    <h5>Emmanuel Richard</h5>
+                                    <p class="mb-0">Grade 6 Student</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Mobile Carousel View -->
+            <div class="d-block d-md-none">
+                <div class="testimonial-carousel-wrapper">
+                    <div class="testimonial-carousel" id="testimonialCarousel">
+                        <!-- Testimonial 1 -->
+                        <div class="testimonial-slide">
+                            <div class="testimonial-card">
+                                <div class="testimonial-content">
+                                    <div class="quote-icon">
+                                        <i class="fas fa-quote-left"></i>
+                                    </div>
+                                    <p class="testimonial-text">
+                                        "St. Joseph Mission School has provided an excellent environment for my child's growth. The teachers are dedicated and caring."
+                                    </p>
+                                    <div class="rating">
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                    </div>
+                                </div>
+                                <div class="testimonial-author">
+                                    <div class="author-img">
+                                        <i class="fas fa-user-circle"></i>
+                                    </div>
+                                    <div class="author-info">
+                                        <h5>Sarah Johnson</h5>
+                                        <p class="mb-0">Parent of Grade 5</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Testimonial 2 -->
+                        <div class="testimonial-slide">
+                            <div class="testimonial-card">
+                                <div class="testimonial-content">
+                                    <div class="quote-icon">
+                                        <i class="fas fa-quote-left"></i>
+                                    </div>
+                                    <p class="testimonial-text">
+                                        "The holistic approach to education here is remarkable. My child excels academically while developing strong character."
+                                    </p>
+                                    <div class="rating">
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                    </div>
+                                </div>
+                                <div class="testimonial-author">
+                                    <div class="author-img">
+                                        <i class="fas fa-user-circle"></i>
+                                    </div>
+                                    <div class="author-info">
+                                        <h5>Michael Charles</h5>
+                                        <p class="mb-0">Parent of Grade 8</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Testimonial 3 -->
+                        <div class="testimonial-slide">
+                            <div class="testimonial-card">
+                                <div class="testimonial-content">
+                                    <div class="quote-icon">
+                                        <i class="fas fa-quote-left"></i>
+                                    </div>
+                                    <p class="testimonial-text">
+                                        "I love coming to school every day! The teachers make learning fun and the facilities are amazing."
+                                    </p>
+                                    <div class="rating">
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                    </div>
+                                </div>
+                                <div class="testimonial-author">
+                                    <div class="author-img">
+                                        <i class="fas fa-user-circle"></i>
+                                    </div>
+                                    <div class="author-info">
+                                        <h5>Emmanuel Richard</h5>
+                                        <p class="mb-0">Grade 6 Student</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Testimonial 4 -->
+                        <div class="testimonial-slide">
+                            <div class="testimonial-card">
+                                <div class="testimonial-content">
+                                    <div class="quote-icon">
+                                        <i class="fas fa-quote-left"></i>
+                                    </div>
+                                    <p class="testimonial-text">
+                                        "The school's focus on values and discipline has transformed my child. We couldn't be happier with the progress."
+                                    </p>
+                                    <div class="rating">
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                    </div>
+                                </div>
+                                <div class="testimonial-author">
+                                    <div class="author-img">
+                                        <i class="fas fa-user-circle"></i>
+                                    </div>
+                                    <div class="author-info">
+                                        <h5>David Wilson</h5>
+                                        <p class="mb-0">Parent of Grade 7</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Carousel Controls -->
+                    <!-- <div class="carousel-controls">
+                        <button class="carousel-prev" id="testimonialPrev">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        
+                        <div class="carousel-indicators" id="testimonialIndicators">
+                            <span class="indicator active" data-slide="0"></span>
+                            <span class="indicator" data-slide="1"></span>
+                            <span class="indicator" data-slide="2"></span>
+                            <span class="indicator" data-slide="3"></span>
+                        </div>
+                        
+                        <button class="carousel-next" id="testimonialNext">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div> -->
+                </div>
+            </div>
+            
+            <div class="text-center mt-5">
+                <p class="text-muted mb-0">Join our growing community of satisfied parents and students</p>
+            </div>
+        </div>
+    </section>
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="footer-brand">
+                        <h4><img src="{% static 'images/logo.png' %}" alt="St Joseph Mission School Logo" class="school-logo"> St Joseph Mission School</h4>
+                        <p style="font-style: italic;">{{ school_info.motto|default:"Excellence in Education and Character Building" }}</p>
+                    </div>
+                    <div class="social-links mt-4">
+                        <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                        <a href="https://wa.me/1234567890" class="social-icon whatsapp-icon" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                    <h5 class="footer-title mt-3">School Hours</h5>
+                            <ul class="list-unstyled mt-1">
+                                <li class="mb-2"><strong>Monday - Friday:</strong> 7:30 AM - 3:30 PM</li>
+                                <li class="mb-2"><strong>Office Hours:</strong> 8:00 AM - 4:00 PM</li>
+                            </ul>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <h5 class="footer-title">Quick Links</h5>
+                    <ul class="footer-links">
+                        <li><a href="{% url 'home' %}"><i class="fas fa-chevron-right me-2"></i>Home</a></li>
+                        <li><a href="{% url 'all_news' %}"><i class="fas fa-chevron-right me-2"></i>News & Announcements</a></li>
+                        <li><a href="{% url 'services' %}"><i class="fas fa-chevron-right me-2"></i>Services</a></li>
+                        <li><a href="{% url 'about' %}"><i class="fas fa-chevron-right me-2"></i>About Us</a></li>
+                        <li><a href="{% url 'contact' %}"><i class="fas fa-chevron-right me-2"></i>Contact Us</a></li>
+                        <li><a href="{% url 'admissions' %}"><i class="fas fa-chevron-right me-2"></i>Admissions</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 col-md-12 mb-4">
+                    <h5 class="footer-title">Contact Info</h5>
+                    {% if school_info %}
+                    <div class="contact-info">
+                        <p><i class="fas fa-map-marker-alt me-3"></i> {{ school_info.address }}</p>
+                        <p><i class="fas fa-phone me-3"></i> {{ school_info.phone }}</p>
+                        <p><i class="fas fa-envelope me-3"></i> {{ school_info.email }}</p>
+                        <p><i class="fab fa-whatsapp me-3"></i> +255 623 113 346</p>
+                    </div>
+                    {% endif %}
+                    <div class="newsletter mt-4">
+                        <h6 class="text-white">Subscribe to Newsletter</h6>
+                        <div class="input-group">
+                            <input type="email" class="form-control" placeholder="Your email">
+                            <button class="btn btn-primary" type="button">Subscribe</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr class="footer-divider">
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="copyright">&copy; {% now "Y" %} St Joseph Mission School. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <a href="#" class="footer-link me-3">Privacy Policy</a>
+                    <a href="#" class="footer-link">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/1234567890?text=Hello%20St%20Joseph%20Mission%20School%2C%20I%20have%20a%20question" class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp whatsapp-icon"></i>
+        <span class="whatsapp-tooltip">Chat with us</span>
+    </a>
+
+    <!-- Back to Top Button -->
+    <button id="backToTop" class="btn btn-primary back-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'js/animations.js' %}"></script>
+    <script src="{% static 'js/scripts.js' %}"></script>
+    <script src="{% static 'js/notifications.js' %}"></script>
+    
+    <!-- Hidden container for Django messages (for JavaScript access) -->
+    <div id="djangoMessages" data-django-messages='[
+        {% for message in messages %}
+        {
+            "tags": "{{ message.tags }}",
+            "message": "{{ message|escapejs }}"
+        }{% if not forloop.last %},{% endif %}
+        {% endfor %}
+    ]' style="display: none;"></div>
+</body>
+</html>
